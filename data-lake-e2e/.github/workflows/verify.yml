@@ -1,0 +1,17 @@
+name: Verify data lake project
+on:
+  push:
+    paths: ["data-lake-e2e/**"]
+  pull_request:
+    paths: ["data-lake-e2e/**"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run: { working-directory: data-lake-e2e }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt pytest
+      - run: pytest -q
